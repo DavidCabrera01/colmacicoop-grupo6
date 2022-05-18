@@ -366,9 +366,49 @@ async function getPreguntaFrecuentes(){
 async function getBeneficios(){
     const {data} = await api('benefit/');
 
-    const d = removeTags(JSON.stringify(data[0].content));
-    //console.log(data);
-    console.log(d);
+    const beneficios = document.querySelector('#beneficios');
+    beneficios.innerHTML='';
+
+
+    const d = removeTags(data[0].content);
+    const arr = d.split('.');
+    console.log(arr[0]);
+    for(let i = arr.length; i >0; i--){
+        const div_contenedor = document.createElement('div');
+        div_contenedor.classList.add('p-2','sm:w-1/2','w-full'); 
+        
+        const div_item = document.createElement('div');
+        div_item.classList.add('bg-gray-100','rounded', 'flex', 'p-4', 'h-full', 'items-center');
+
+        const svg = document.createElement('svg');
+        svg.classList.add('text-[#45c95b]', 'w-6', 'h-6', 'flex-shrink-0', 'mr-4');
+        svg.setAttribute('fill','none');
+        svg.setAttribute('stroke','currentColor');
+        svg.setAttribute('stroke-linecap','round');
+        svg.setAttribute('stroke-linejoin','round');
+        svg.setAttribute('stroke-width','3');
+        svg.setAttribute('viewBox','0 0 24 24');
+
+        const path_1 = document.createElement('path');
+        path_1.setAttribute('d','M22 11.08V12a10 10 0 11-5.93-9.14');
+        const path_2 = document.createElement('path');
+        path_2.setAttribute('d','M22 4L12 14.01l-3-3');
+
+        svg.appendChild(path_1);
+        svg.appendChild(path_2);
+
+        const span = document.createElement('span');
+        span.innerHTML = arr[i];
+
+        div_item.appendChild(svg);
+        div_item.appendChild(span);
+
+        div_contenedor.appendChild(div_item);
+
+        beneficios.appendChild(div_contenedor);
+    }
+        
+    
    
 }
 
